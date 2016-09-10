@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tony Ding’s Home</title>
+    <title>Tony Ding&#39;s Blog</title>
     <link>https://dingtongqin.github.io/</link>
-    <description>Recent content on Tony Ding’s Home</description>
+    <description>Recent content on Tony Ding&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright> 2016 Copyright Text</copyright>
@@ -23,32 +23,140 @@
 &lt;p&gt;官方对Open vSwitch(OVS)的含义是这样说的：&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;顾名思义，Open vSwitch即开放虚拟交换标准！具体点说，Open vSwitch是在开源的Apache2.0许可下的产品级质量的多层虚拟交换标准！它旨在通过编程扩展，使庞大的网络自动化（配置、管理、维护），同时还支持标准的管理接口和协议（如NetFlow， sFlow， SPAN， RSPAN， CLI， LACP， 802.1ag）。总的来说，它被设计为支持分布在多个物理服务器，例如VMware的vNetwork分布式vSwitch或思科的Nexus1000V。&lt;/p&gt;
+&lt;p&gt;顾名思义，Open vSwitch即开放虚拟交换标准！具体点说，Open vSwitch是在开源的Apache2.0许可下的产品级质量的多层虚拟交换标准！它旨在通过编程扩展，使庞大的网络自动化（配置、管理、维护），同时还支持标准的管理接口和协议（如NetFlow， sFlow， SPAN， RSPAN， CLI， LACP， 802.1ag）。总的来说，它被设计为支持分布在多个物理服务器，例如VMware的vNetwork分布式vSwitch或思科的Nexus1000V.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;在虚拟环境下的虚拟机之间进行的网络行为，包括内网通信、外网通信、QoS服务、安全监控和管理部署等，都给网络设计和运维带来了困难，因为VM之间的流量在服务器内部，并不是所有的流量都到服务器之间的物理交换机上；此时Open vSwitch的出现给这些问题的解决带来了希望，因为Open vSwitch不仅支持LAN/VXLAN/NVGGE等隔离方式，并且支持QoS服务和SFLOW等监控功能。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;在虚拟环境下的虚拟机之间进行的网络行为，包括内网通信、外网通信、QoS服务、安全监控和管理部署等，都给网络设计和运维带来了困难，因为VM之间的流量在服务器内部，并不是所有的流量都到服务器之间的物理交换机上；此时Open vSwitch的出现给这些问题的解决带来了希望，因为Open vSwitch不仅支持LAN/VXLAN/NVGGE等隔离方式，并且支持QoS服务和SFLOW等监控功能,并且还支持OpenFlow协议。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/ovs_vm.jpg&#34; alt=&#34;ovs_vm.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/ovs/ovs_vm.jpg&#34; width = &#34;357&#34; height = &#34;297&#34; alt=&#34;&#34; align=center /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&#34;open-vswitch的产生与发展&#34;&gt;Open vSwitch的产生与发展&lt;/h3&gt;
 
+&lt;p&gt;&amp;emsp;&amp;emsp;要追溯Open vSwitch的产生就不得不提Openflow和SDN，即Software Defined Networking，软件定义网络。随着互联网的发展，今天的互联网业务对互联网提出了越来越高的传输质量要求，针对如何修改网络来满足新业务的需求，出现了改良派和革命派两种不同的做法。改良派提议在原有基础设施的基础上增添新的协议，而改革派认为需要推到一切重来。OpenFlow就是改革派提出的一种新型网络交换模型，通过将网络设备控制面与数据面分离开来，从而实现了网络流量的灵活控制，是网络作为管道变得更加智能，OpenFlow协议给网络带来可编程的特性，大大增加了网络的灵活性。后续会专门开一篇帖子来学习讨论openflow协议。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;2006年，SDN诞生于美国斯坦福大学Clean State项目，该项目的最终目的是要重新发明英特网，当年，斯坦福大学的学生Martin Casado领导了一个关于网络安全和管理的项目Ethane，该项目试图通过一个集中式的控制器，让网络管理员可以方便地定义基于网络流的安全控制策略，并将这些安全策略应用到各种网络设备中，从而实现对整个网络通讯的安全控制。受此项目启发，Martin和他的导师Nick McKeown教授(时任Clean Slate项目的Faculty Director)发现，如果将Ethane的设计更一般化，将传统网络设备的数据转发(data plane)和路由控制(control plane)两个功能模块相分离，通过集中式的控制器(Controller)以标准化的接口对各种网络设备进行管理和配置，那么这将为网络资源的设计、管理和使用提供更多的可能性，从而更容易推动网络的革新与发展。于是，他们便提出了OpenFlow的概念，并且Nick McKeown等人于2008年在ACM SIGCOMM发表了题为OpenFlow: Enabling Innovation in Campus Networks的论文，首次详细地介绍了OpenFlow的概念。该篇论文除了阐述OpenFlow的工作原理外，还列举了OpenFlow几大应用场景，包括：1)校园网络中对实验性通讯协议的支持(如其标题所示);2) 网络管理和访问控制;3)网络隔离和VLAN;4)基于WiFi的移动网络;5)非IP网络;6)基于网络包的处理。当然，目前关于OpenFlow的研究已经远远超出了这些领域。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/ovs/Martin.png&#34; width = &#34;357&#34; height = &#34;297&#34; alt=&#34;&#34; align=center /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;                    Martin Casado
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;Open vSwitch是一个有Nicira Networks（已被VMWare收购）主导的开源项目，Martin Casado正是Nicira创始人之一及CTO，并且Open vSwitch源码的第一个Commit正是Martin Casado作为程序员提交的，这个Commit也奠定了多年以后开源云计算平台中最受欢迎而且也是部署最为广泛的开源虚拟交换机。需求决定产品，正是由于在企业级云中，需要各种丰富的网络功能，VMware才于n年前就推出了vSwitch、vDS等虚拟交换机。正是看到了云中的网络是一块大市场，Cisco才与VMware紧密合作，以partner的形式基于VMware kernel API开发出了自己的分布式虚拟交换机Nexus 1000V（功能对应于VMware的vDS）。可惜的是，这两款产品都是收费的。Citrix倒是基于Open vSwitch快速追赶，推出了自己的Distributed Virtual Switch解决方案，但是不好意思，也是收费的。开源云的标杆OpenStack在2011年下半年推出了一项宏大的计划，启动了Quantum项目，志在通过引入Open vSwitch，为Open Stack Network模块勾勒出“Connectivity as a service”的动人前景。也正是基于Openstack社区的快速壮大，open vswitch成为了虚拟交换的真正标准。&lt;/p&gt;
+
+&lt;hr /&gt;
+
 &lt;h3 id=&#34;open-vswitch架构&#34;&gt;Open vSwitch架构&lt;/h3&gt;
 
-&lt;h3 id=&#34;open-vswitch用户态与内核态&#34;&gt;Open vSwitch用户态与内核态&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/ovs/ovs_framework.png&#34; width = &#34;512&#34; height = &#34;384&#34; alt=&#34;图片名称&#34; align=center /&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;该图简单但很好的展示了Open vSwitch的结构框架，Open vSwitch支持OpenFlow协议，上层可统一接收SDN控制平面及OpenFlow控制器的指令。Open Switch定义了一系列Flow Table，通过它来控制包的流向和结构，open vswitch对外提供统一的南向接口，可以接受外部控制器下发的流表，也就是说Open vSwitch是可以被远程控制。Open vSwitch内部分为用户和内核两层，即所谓的用户态和内核态。&lt;/p&gt;
+
+&lt;h5 id=&#34;用户层-态&#34;&gt;用户层（态）&lt;/h5&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;用户层最为守护程序实现了交换机和流表，是Open vSwitch的核心，提供了一些组件去管理交换机，实现数据库，对内核进行直接管理。主要包含三个守护进程：ovs-vswitched,ovsdb-server和ovs-brcompatd。ovs-vswitchd是执行OVS的一个守护进程，它实现了OpenFlow交换机的核心功能，并且通过netlink协议直接和OVS的内核模块进行通信。交换机运行过程中，ovs-vswitchd还会将交换机的配置、数据流信息及其变化保存到数据库ovsdb中，因为这个数据库由ovsdb-server直接管理，所以ovs-vswitchd需要和ovsdb-server通过Unix的soket机制进行通信以获得或者保存配置信息。数据库ovsdb的存在使得OVS交换机的配置能够被持久化存储，即使设备被重启后相关的OVS配置仍旧能够存在。&lt;/p&gt;
+
+&lt;h5 id=&#34;内核层-态&#34;&gt;内核层（态）&lt;/h5&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;openvswitch_mod.ko是内核态的主要模块，完成数据包的查找、转发、修改等操作，一个数据流的后续数据包到达OVS后将直接交由内核态，使用openvswitch_mod.ko中的处理函数对数据包进行处理。&lt;/p&gt;
+
+&lt;h5 id=&#34;报文转发流程&#34;&gt;报文转发流程&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;交换机启动后，添加或变更交换机所包含的端口，可能是物理端口也可能是虚拟网卡。&lt;/li&gt;
+&lt;li&gt;根据数据包的触发、CLI命令下发或SDN控制器的指令下发流表项，可能是转发项，也可能是其它动作的表项。&lt;/li&gt;
+&lt;li&gt;从交换机端口接收报文后，根据端口类型对报文进行解封装处理，比如VXLAN报文，需要将隧道头去掉再解析报文的头部字段信息。&lt;/li&gt;
+&lt;li&gt;根据解析得到的字段组成key，去匹配Open Vswitch中已有的流表项。&lt;/li&gt;
+&lt;li&gt;根据匹配结果转发到相应端口，也可能是被丢弃或被送上控制器。&lt;/li&gt;
+&lt;li&gt;到达出端口的报文，根据端口类型可能进行字段修改或隧道封装转发出去。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&#34;open-vswitch的常用命令&#34;&gt;Open vSwitch的常用命令&lt;/h3&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Getting started with the Academic theme for Hugo</title>
-      <link>https://dingtongqin.github.io/template/</link>
-      <pubDate>Wed, 20 Apr 2016 12:00:00 +0000</pubDate>
-      
-      <guid>https://dingtongqin.github.io/template/</guid>
-      <description>
 
-&lt;h1 id=&#34;biography&#34;&gt;Biography&lt;/h1&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;Open vSwitch有两种运行模式：standalone和secure。在前一种模式下，如果没有运行Controller的话，Open vSwitch会自动调回普通switch模式，如果有controller的话，会自动变为OpenFlow switch。在后一种模式下，不管是否有Controller，Open vSwitch都作为OpenFlow Switch运行，所有Interface在bridge上，等待Controller或用户添加流表项到switch来进行通信。
+&amp;emsp;&amp;emsp;Open vSwitch有两个常用命令工具：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    ovs-vsctl 用来查询和配置ovs-vswitchd
+    ovs-ofctl 管理配置OpenFlow switch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;1 添加OVS和PORT&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;    ovs-vsctl add-br br0
+    ovs-vsctl del-br br0 
+    ovs-vsctl list-br 
+    ovs-vsctl add-port br0 eth0
+    ovs-vsctl set port eth0 tag=1//vlan id
+    ovs-vsctl del-port br0 eth0
+    ovs-vsctl list-ports br0 
+    ovs-vsctl show //显示所有端口的vlan属性
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.配置流规则&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;    ovs-ofctl add-flow br-int idle_timeout=0,in_port=2,dl_type=0x0800,dl_src=00:88:77:66:55:44,dl_dst=11:22:33:44:55:66,nw_src=1.2.3.4,nw_dst=5.6.7.8,nw_proto=1,tp_src=1,tp_dst=2,actions=drop
+    ovs-ofctl del-flows br-int in_port=2 //in_port=2的所有流规则被删除
+    ovs-ofctl  dump-ports br-int
+    ovs-ofctl  dump-flows br-int
+    ovs-ofctl show br-int //查看端口号
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt; 支持字段还有nw_tos,nw_ecn,nw_ttl,dl_vlan,dl_vlan_pcp,ip_frag，arp_sha,arp_tha,ipv6_src,ipv6_dst等;
+ 支持流动作还有output：port，mod_dl_src/mod_dl_dst,set field等;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;查看OVS的配置&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;    ovs-vsctl list/set/get/add/remove/clear/destroy table record column [VALUE]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;TABLE名有bridge,controller,interface,mirror,netflow,open_vswitch,port,qos,queue,ssl,sflow&lt;/p&gt;
+
+&lt;p&gt;4.配置vxlan gre和ip address&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;   ovs-vsctl add-port br-ex port -- set interface port type=vxlan options:remote_ip=192.168.100.3
+
+   ovs−vsctladd−port br-ex port −− set Interface port type=greoptions:remote_ip=192.168.100.3
+
+   ovs−vsctladd−port br-ex port tag=10 −− set Interface port type=internal//默认为access
+
+   ifconfig port 192.168.100.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;显示并学习MAC&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;    ovs-appctl fdb/show br-ex
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;设置控制器地址&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;    ovs-vsctl set-controller br-ex tcp:192.168.100.1:6633
+
+    ovs-vsctl get-controller br0
+
+    ovs-controller ptcp:6633:192.100.100.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;参考&amp;amp;引用：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://network.51cto.com/art/201306/397443.htm&#34;&gt;http://network.51cto.com/art/201306/397443.htm&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.csdn.net/article/2014-07-28/2820901&#34;&gt;http://www.csdn.net/article/2014-07-&lt;sup&gt;28&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2820901&lt;/sub&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://bengo.blog.51cto.com/4504843/791213&#34;&gt;http://bengo.blog.51cto.com/4504843/791213&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.cnblogs.com/popsuper1982/p/3800574.html&#34;&gt;http://www.cnblogs.com/popsuper1982/p/3800574.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
 </description>
     </item>
     
