@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tony Ding’s Home</title>
-    <link>https://dingtongqin.github.io/</link>
-    <description>Recent content on Tony Ding’s Home</description>
+    <title>Technology on Tony Ding’s Home</title>
+    <link>https://dingtongqin.github.io/categories/technology/</link>
+    <description>Recent content in Technology on Tony Ding’s Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright> 2016 Copyright Text</copyright>
     <lastBuildDate>Sat, 20 Aug 2016 12:00:00 +0000</lastBuildDate>
-    <atom:link href="https://dingtongqin.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://dingtongqin.github.io/categories/technology/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>openvswitch技术介绍</title>
@@ -37,18 +37,6 @@
 &lt;h3 id=&#34;open-vswitch用户态与内核态&#34;&gt;Open vSwitch用户态与内核态&lt;/h3&gt;
 
 &lt;h3 id=&#34;open-vswitch的常用命令&#34;&gt;Open vSwitch的常用命令&lt;/h3&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Getting started with the Academic theme for Hugo</title>
-      <link>https://dingtongqin.github.io/template/</link>
-      <pubDate>Wed, 20 Apr 2016 12:00:00 +0000</pubDate>
-      
-      <guid>https://dingtongqin.github.io/template/</guid>
-      <description>
-
-&lt;h1 id=&#34;biography&#34;&gt;Biography&lt;/h1&gt;
 </description>
     </item>
     

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.16" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>Tony Ding’s Home</title>
+  <title>openvswitch技术介绍</title>
   <link href="https://dingtongqin.github.io/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="https://dingtongqin.github.io/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
@@ -49,67 +48,82 @@
   </div>
 
 
+
 <div class="container">
   <div class="section">
 
+    <div class="row">
+      <div class="col s12">
+        <div class="card-panel">
+          <h4>openvswitch技术介绍</h4>
+          <p>
+          
+            
+              <a href="https://dingtongqin.github.io/categories/technology/">technology</a>
+            
+           
+          </p>
+          <p>
 
-<div class="row">
+<h3 id="什么是open-vswitch">什么是Open vSwitch</h3>
 
-  
-  <div class="col m4 s12">
-    <div class="card-panel">
-      <h4><a href="https://dingtongqin.github.io/technology/openvswitch/">openvswitch技术介绍</a></h4>
-      <p>
-      
-        
-          <a href="https://dingtongqin.github.io/categories/technology/">technology</a>
-        
-       
-      </p>
-      <p>什么是Open vSwitch 官方对Open vSwitch(OVS)的含义是这样说的： 顾名思义，Open vSwitch即开放虚拟交换标准！具体点说，Open vSwitch是在开源的Apache2.0许可下的产品级质量的多层虚拟交换标准！它旨在通过编程扩展，使庞大的网络自动化（配置、管理、维护），同时还支持标准的管理接口和协议（如NetFlow， sFlow， SPAN， RSPAN， CLI， LACP， 802.1ag）。总的来说，它被设计为支持分布在多个物理服务器，例如VMware的vNetwork分布式vSwitch或思科的Nexus1000V。 在虚拟环境下的虚拟机之间进行的网络行为，包括内网通信、外网通信、QoS服务、安全监控和管理部署等，都给网络设计和运维带来了困难，因为VM之间的流量在服务器内部，并不是所有的流量都到服务器之间的物理交换机上；此时Open vSwitch的出现给这些问题的解决带来了希望，因为Open vSwitch不仅支持LAN/VXLAN/NVGGE等隔离方式，并且支持QoS服务和SFLOW等监控功能。 Open vSwitch的产生与发展 Open vSwitch架构 Open vSwitch用户态与内核态 Open vSwitch的常用命令</p>
-      <p>
-      20 Aug 2016
-      
-        
-          <a href="https://dingtongqin.github.io/tags/openvswitch/">#openvswitch</a>
-        
-       
-      </p>
+<p>官方对Open vSwitch(OVS)的含义是这样说的：</p>
+
+<blockquote>
+<p>顾名思义，Open vSwitch即开放虚拟交换标准！具体点说，Open vSwitch是在开源的Apache2.0许可下的产品级质量的多层虚拟交换标准！它旨在通过编程扩展，使庞大的网络自动化（配置、管理、维护），同时还支持标准的管理接口和协议（如NetFlow， sFlow， SPAN， RSPAN， CLI， LACP， 802.1ag）。总的来说，它被设计为支持分布在多个物理服务器，例如VMware的vNetwork分布式vSwitch或思科的Nexus1000V。</p>
+</blockquote>
+
+<p>在虚拟环境下的虚拟机之间进行的网络行为，包括内网通信、外网通信、QoS服务、安全监控和管理部署等，都给网络设计和运维带来了困难，因为VM之间的流量在服务器内部，并不是所有的流量都到服务器之间的物理交换机上；此时Open vSwitch的出现给这些问题的解决带来了希望，因为Open vSwitch不仅支持LAN/VXLAN/NVGGE等隔离方式，并且支持QoS服务和SFLOW等监控功能。</p>
+
+<p><img src="/images/ovs_vm.jpg" alt="ovs_vm.jpg" /></p>
+
+<h3 id="open-vswitch的产生与发展">Open vSwitch的产生与发展</h3>
+
+<h3 id="open-vswitch架构">Open vSwitch架构</h3>
+
+<h3 id="open-vswitch用户态与内核态">Open vSwitch用户态与内核态</h3>
+
+<h3 id="open-vswitch的常用命令">Open vSwitch的常用命令</h3>
+</p>
+          <p>20 Aug 2016
+            
+              
+                <a href="https://dingtongqin.github.io/tags/openvswitch/">#openvswitch</a>
+              
+            
+          </p>
+          
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    var disqus_shortname = 'Your Disqus Name';
+    
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+          
+        </div>
+      </div>
     </div>
-  </div>
 
-  
-  <div class="col m4 s12">
-    <div class="card-panel">
-      <h4><a href="https://dingtongqin.github.io/template/">Getting started with the Academic theme for Hugo</a></h4>
-      <p>
-       
-      </p>
-      <p>Biography</p>
-      <p>
-      20 Apr 2016
-       
-      </p>
+    <div class="row">
+      <div class="col s3 m1">
+      
+        <a class="btn-floating btn-large disabled"><i class="mdi-navigation-arrow-back"></i></a>
+      
+      </div>
+      <div class="col s6 m10 center">&nbsp</div>
+      <div class="col s3 m1">
+      
+        <a class="btn-floating btn-large waves-effect waves-light" href="https://dingtongqin.github.io/template/"><i class="mdi-navigation-arrow-forward"></i></a>
+      
+      </div>
     </div>
-  </div>
-
-</div>
-
-  
-<div class="row">
-  <div class="col s3 m1">
-  
-    <a class="btn-floating btn-large disabled"><i class="mdi-navigation-arrow-back"></i></a>
-  
-  </div>
-  <div class="col s6 m10 center">&nbsp</div>
-  <div class="col s3 m1">
-  
-    <a class="btn-floating btn-large disabled"><i class="mdi-navigation-arrow-forward"></i></a>
-  
-  </div>
-</div>
-
 
   </div>
 </div>
@@ -140,3 +154,4 @@
 
   </body>
 </html>
+
