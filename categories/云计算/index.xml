@@ -20,7 +20,7 @@
 
 &lt;p&gt;&amp;emsp;&amp;emsp;最近在学习Neutron，本文的目的是从整体角度来梳理一下思路和并作备忘，本文就OpenStack Neutron的发展及基本架构作一个简单总结分析，并不涉及Neutron具体的技术细节，随着工作学习的深入，会分享总结一些具体的技术细节讨论帖。&lt;/p&gt;
 
-&lt;h3 id=&#34;openstack网络架构发展&#34;&gt;openstack网络架构发展&lt;/h3&gt;
+&lt;h4 id=&#34;openstack网络架构发展&#34;&gt;openstack网络架构发展&lt;/h4&gt;
 
 &lt;p&gt;&amp;emsp;&amp;emsp;OpenStack的网络最初是由Nova-network来提供的，租户间的隔离采用VLAN技术。在2010年OpenStack第一个版本Austin正是发布时，Nova-network便已作为正式组件发布，起主要功能是为虚拟机提供私有IP和浮动IP，通过IPtables和Ebtables提供安全功能，为网络管理提供三种网络模型：Flat Network、Flat DHCP Network和VLAN Network。Nova-network的网络里，物理机上同一租户的虚拟机通过Linux Bridge与服务器的物理网卡相连，以此来将数据信息发往外网或其他服务器上虚拟机，每个租户至少占用一个VLAN隔离域，租户内的虚拟机如果通过DHCP获取IP，必须有对应子网的Dnsmasq进程。&lt;/p&gt;
 
@@ -28,7 +28,7 @@
 
 &lt;p&gt;&amp;emsp;&amp;emsp;OpenStack在Diablo版中Quantum以发展项目的形式首次出现，在Essex版中有了试用版的Quantum，直到Folsom版本Quantum才正式发布。在G版本中，因为名称Quantum已经被一个公司注册，所以在H版本中更名为Neutron，现在我们发现，OpenStack的文档中很多命名都还是基于Quantum命名的，如qr-xxx,qvbxxx等，其中q即quantum的缩写。&lt;/p&gt;
 
-&lt;h3 id=&#34;neutron-网络架构&#34;&gt;Neutron 网络架构&lt;/h3&gt;
+&lt;h4 id=&#34;neutron-网络架构&#34;&gt;Neutron 网络架构&lt;/h4&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/Neutron/OpenStack-Neutron-framework.jpg&#34; width = &#34;502&#34; height = &#34;316&#34; alt=&#34;&#34; align=center /&gt;&lt;/p&gt;
 
@@ -72,11 +72,11 @@
       <guid>https://dingtongqin.github.io/technology/openstack_ci/</guid>
       <description>
 
-&lt;h3 id=&#34;什么是持续集成&#34;&gt;什么是持续集成&lt;/h3&gt;
+&lt;h4 id=&#34;什么是持续集成&#34;&gt;什么是持续集成&lt;/h4&gt;
 
 &lt;p&gt;&amp;emsp;&amp;emsp;持续集成是一种软件开发时间，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误。许多团队发现这个过程可以大大减少集成问题，让团队能够更快的开发内聚的软件。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续集成的前提&#34;&gt;持续集成的前提&lt;/h3&gt;
+&lt;h4 id=&#34;持续集成的前提&#34;&gt;持续集成的前提&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;    - 统一的代码库
     - 自动构建
@@ -90,7 +90,7 @@
     - 自动化部署
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;###OpenStack社区CI体系&lt;/p&gt;
+&lt;h4 id=&#34;openstack社区ci体系&#34;&gt;OpenStack社区CI体系&lt;/h4&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/openstack_ci/openstack_ci.jpg&#34; width = &#34;575&#34; height = &#34;403&#34; alt=&#34;&#34; align=center /&gt;&lt;/p&gt;
 
@@ -126,7 +126,7 @@
       <guid>https://dingtongqin.github.io/technology/openvswitch/</guid>
       <description>
 
-&lt;h3 id=&#34;什么是open-vswitch&#34;&gt;什么是Open vSwitch&lt;/h3&gt;
+&lt;h4 id=&#34;什么是open-vswitch&#34;&gt;什么是Open vSwitch&lt;/h4&gt;
 
 &lt;p&gt;官方对Open vSwitch(OVS)的含义是这样说的：&lt;/p&gt;
 
@@ -140,7 +140,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;open-vswitch的产生与发展&#34;&gt;Open vSwitch的产生与发展&lt;/h3&gt;
+&lt;h4 id=&#34;open-vswitch的产生与发展&#34;&gt;Open vSwitch的产生与发展&lt;/h4&gt;
 
 &lt;p&gt;&amp;emsp;&amp;emsp;要追溯Open vSwitch的产生就不得不提Openflow和SDN，即Software Defined Networking，软件定义网络。随着互联网的发展，今天的互联网业务对互联网提出了越来越高的传输质量要求，针对如何修改网络来满足新业务的需求，出现了改良派和革命派两种不同的做法。改良派提议在原有基础设施的基础上增添新的协议，而改革派认为需要推到一切重来。OpenFlow就是改革派提出的一种新型网络交换模型，通过将网络设备控制面与数据面分离开来，从而实现了网络流量的灵活控制，是网络作为管道变得更加智能，OpenFlow协议给网络带来可编程的特性，大大增加了网络的灵活性。后续会专门开一篇帖子来学习讨论openflow协议。&lt;/p&gt;
 
@@ -155,7 +155,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;open-vswitch架构&#34;&gt;Open vSwitch架构&lt;/h3&gt;
+&lt;h4 id=&#34;open-vswitch架构&#34;&gt;Open vSwitch架构&lt;/h4&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/ovs/ovs_framework.png&#34; width = &#34;512&#34; height = &#34;384&#34; alt=&#34;图片名称&#34; align=center /&gt;&lt;/p&gt;
 
@@ -182,7 +182,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;open-vswitch的常用命令&#34;&gt;Open vSwitch的常用命令&lt;/h3&gt;
+&lt;h4 id=&#34;open-vswitch的常用命令&#34;&gt;Open vSwitch的常用命令&lt;/h4&gt;
 
 &lt;p&gt;&amp;emsp;&amp;emsp;Open vSwitch有两种运行模式：standalone和secure。在前一种模式下，如果没有运行Controller的话，Open vSwitch会自动调回普通switch模式，如果有controller的话，会自动变为OpenFlow switch。在后一种模式下，不管是否有Controller，Open vSwitch都作为OpenFlow Switch运行，所有Interface在bridge上，等待Controller或用户添加流表项到switch来进行通信。
 &amp;emsp;&amp;emsp;Open vSwitch有两个常用命令工具：&lt;/p&gt;

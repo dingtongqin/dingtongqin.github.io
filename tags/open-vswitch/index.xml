@@ -18,7 +18,7 @@
       <guid>https://dingtongqin.github.io/technology/openvswitch/</guid>
       <description>
 
-&lt;h3 id=&#34;什么是open-vswitch&#34;&gt;什么是Open vSwitch&lt;/h3&gt;
+&lt;h4 id=&#34;什么是open-vswitch&#34;&gt;什么是Open vSwitch&lt;/h4&gt;
 
 &lt;p&gt;官方对Open vSwitch(OVS)的含义是这样说的：&lt;/p&gt;
 
@@ -32,7 +32,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;open-vswitch的产生与发展&#34;&gt;Open vSwitch的产生与发展&lt;/h3&gt;
+&lt;h4 id=&#34;open-vswitch的产生与发展&#34;&gt;Open vSwitch的产生与发展&lt;/h4&gt;
 
 &lt;p&gt;&amp;emsp;&amp;emsp;要追溯Open vSwitch的产生就不得不提Openflow和SDN，即Software Defined Networking，软件定义网络。随着互联网的发展，今天的互联网业务对互联网提出了越来越高的传输质量要求，针对如何修改网络来满足新业务的需求，出现了改良派和革命派两种不同的做法。改良派提议在原有基础设施的基础上增添新的协议，而改革派认为需要推到一切重来。OpenFlow就是改革派提出的一种新型网络交换模型，通过将网络设备控制面与数据面分离开来，从而实现了网络流量的灵活控制，是网络作为管道变得更加智能，OpenFlow协议给网络带来可编程的特性，大大增加了网络的灵活性。后续会专门开一篇帖子来学习讨论openflow协议。&lt;/p&gt;
 
@@ -47,7 +47,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;open-vswitch架构&#34;&gt;Open vSwitch架构&lt;/h3&gt;
+&lt;h4 id=&#34;open-vswitch架构&#34;&gt;Open vSwitch架构&lt;/h4&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/ovs/ovs_framework.png&#34; width = &#34;512&#34; height = &#34;384&#34; alt=&#34;图片名称&#34; align=center /&gt;&lt;/p&gt;
 
@@ -74,7 +74,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;open-vswitch的常用命令&#34;&gt;Open vSwitch的常用命令&lt;/h3&gt;
+&lt;h4 id=&#34;open-vswitch的常用命令&#34;&gt;Open vSwitch的常用命令&lt;/h4&gt;
 
 &lt;p&gt;&amp;emsp;&amp;emsp;Open vSwitch有两种运行模式：standalone和secure。在前一种模式下，如果没有运行Controller的话，Open vSwitch会自动调回普通switch模式，如果有controller的话，会自动变为OpenFlow switch。在后一种模式下，不管是否有Controller，Open vSwitch都作为OpenFlow Switch运行，所有Interface在bridge上，等待Controller或用户添加流表项到switch来进行通信。
 &amp;emsp;&amp;emsp;Open vSwitch有两个常用命令工具：&lt;/p&gt;
