@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>OpenStack Neutron架构学习总结</title>
+  <link href="https://dingtongqin.github.io/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="https://dingtongqin.github.io/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
+  <style type="text/css">
+  
+    footer.page-footer{background-image: url(https://dingtongqin.github.io/images/default.png);}
+  
+  </style>
+</head>
+<body>
+  <ul id="slide-out" class="side-nav">
+    <li><a href="https://dingtongqin.github.io"><i class="mdi-action-home left"></i>Home<i class="mdi-hardware-keyboard-arrow-right right"></i></a></li>
+    <li><a href="https://dingtongqin.github.io/categories/"><i class="mdi-action-perm-media left"></i>Categories<i class="mdi-hardware-keyboard-arrow-right right"></i></a></li>
+    <li><a href="https://dingtongqin.github.io/tags/"><i class="mdi-action-loyalty left"></i>Tags<i class="mdi-hardware-keyboard-arrow-right right"></i></a></li>
+  </ul>
+  <div id="index-banner" class="parallax-container">
+  <a data-activates="slide-out" class="btn-floating button-collapse" style="top: 5px; left: 5px;"><i class="mdi-navigation-menu"></i></a>
+    <div class="section no-pad-bot">
+      <div class="container">
+        
+        <h1 class="header center teal-text text-lighten-2">Tony Ding&#39;s Blog</h1>
+        <div class="row center">
+          <h5 class="header col s12 light"></h5>
+        </div>
+        <div class="row center">
+        
+          <a href="https://github.com/dingtongqin"><img src="https://dingtongqin.github.io/images/github2-dreamstale35.png"></a>
+        
+        
+        
+        
+        
+          <a href="https://dingtongqin.github.io/index.xml"><img src="https://dingtongqin.github.io/images/feed-dreamstale27.png"></a>
+        </div>
+      </div>
+    </div>
+    <div class="parallax">
+    
+      <img src="https://dingtongqin.github.io/images/default.png">
+    
+    </div>
+  </div>
+
+
+
+<div class="container">
+  <div class="section">
+
+    <div class="row">
+      <div class="col s12">
+        <div class="card-panel">
+          <h4>OpenStack Neutron架构学习总结</h4>
+          <p>
+          
+            
+              <a href="https://dingtongqin.github.io/categories/technology/">technology</a>
+            
+           
+          </p>
+          <p>
+
+<p>&emsp;&emsp;最近在学习Neutron，本文的目的是从总体角度来梳理一下思路和备忘，本文就OpenStack Neutron的发展及基本架构作一个简单总结分析，并不涉及Neutron具体的技术细节，随着工作学习的深入，会分享总结一些具体的技术细节讨论帖。</p>
+
+<h3 id="openstack网络架构发展">openstack网络架构发展</h3>
+
+<p>&emsp;&emsp;OpenStack的网络最初是由Nova-network来提供的，租户间的隔离采用VLAN技术。在2010年OpenStack第一个版本Austin正是发布时，Nova-network便已作为正式组件发布，起主要功能是为虚拟机提供私有IP和浮动IP，通过IPtables和Ebtables提供安全功能，为网络管理提供三种网络模型：Flat Network、Flat DHCP Network和VLAN Network。Nova-network的网络里，物理机上同一租户的虚拟机通过Linux Bridge与服务器的物理网卡相连，以此来将数据信息发往外网或其他服务器上虚拟机，每个租户至少占用一个VLAN隔离域，租户内的虚拟机如果通过DHCP获取IP，必须有对应子网的Dnsmasq进程。</p>
+
+<p>&emsp;&emsp;Nova-network的优势是拓扑简单、报文转发流程少且转发效率高等优势，但也存在功能较少、只支持二层转发、不便于扩展、不支持重叠地址的多个私有网络、不能提供高级网络服务，隔离方式只支持VLAN，没有提供VXLAN和NVGRE的成熟可用方案。</p>
+
+<p>&emsp;&emsp;OpenStack在Diablo版中Quantum以发展项目的形式首次出现，在Essex版中有了试用版的Quantum，直到Folsom版本Quantum才正式发布。在G版本中，因为名称Quantum已经被一个公司注册，所以在H版本中更名为Neutron，现在我们发现，OpenStack的文档中很多命名都还是基于Quantum命名的，如qr-xxx,qvbxxx等，其中q即quantum的缩写。</p>
+
+<h3 id="neutron-网络架构">Neutron 网络架构</h3>
+
+<p><img src="/images/Neutron/OpenStack-Neutron-framework.jpg" width = "502" height = "316" alt="" align=center /></p>
+
+<p>&emsp;&emsp;上图（引用2）很好的表达了neutron的架构。Neutron只有一个主要的服务进程neutron-server,它运行于控制节点，提供RESTful API作为访问Neutron的入口，neutron-server接收用户的HTTP请求，最终由遍布于计算节点和网络节点的各种Agent来完成。</p>
+
+<p>&emsp;&emsp;Neutron提供众多API资源对应Neutron的网络抽象，其中L2的抽象network、subnet和port被认为是核心资源，其他层次的抽象，如router以及其它高层次的服务则被定义为扩展资源（Extension API）。</p>
+
+<p>&emsp;&emsp;为了更容易扩展，Neutron以Plugin的方式组织代码，每一个Plugin支持一组API资源并完成特定的操作，这些操作最终由Plugin通过RPC调用相应的Agent来完成。这些Plugin又被做了一些区分，一些提供基础二层虚拟网络支持的Plugin成为Core Plugin，它们必须至少实现L2的三个主要抽象，管理员需要从实现的Core Plugin中选择一种。Core Plugin之外的其他Plugin被成为“Service Plugin”，如提供防火墙服务的Firewall Plugin。在H版本中Neutron实现了一个ML2 Core Plugin，它采用了更加灵活的结构进行实现，通过Driver的形式可以对现有的各种Core Plugin提供支持，ML2 Plugin的出现意在取代目前的所有Core Plugin。</p>
+
+<p>&emsp;&emsp;Agent一般专属于某个功能，用于使用物理网络设备或一些虚拟技术完成某些实际的操作，比如实现router具体操作的L3 Agent。</p>
+
+<p>&emsp;&emsp;Neutron中Core Plugin完成二层网络隔离的相关配置和实现互通性的虚拟机的报文转发，现在的种类很多，使用时只能选择一个。另一种Service Plugin主要实现三层网络功能以及三层以上的业务应用功能，如Meter/Router/FWaas/LBaas/VPNaas等，每种应用的底层Service Plugin也可能会有多种，基本只能选择其中一个来使用。Neutron支持的Core Plugin举例如下：</p>
+
+<pre><code>    -  Open vSwitch Plugin
+    -  Linux Bridge Plugin
+    -  Cisco UCS/Nexus Plugin
+    -  Cloudbase Hyper-v Plugin
+    -  Nicira Network Virtualization Platform Plugin
+    -  Brocade Neutron Plugin
+    -  Big Switch Controller Plugin
+    -  NEC OpenFlow Plugin
+    -  Ryu OpenFlow Controller Plugin
+</code></pre>
+
+<p>&emsp;&emsp;在OpenStack应用中，使用最广泛的Core Plugin是Open Vswitch,关于openvswitch的介绍可以看另一篇博客（<a href="https://dingtongqin.github.io/technology/openvswitch/">openvswitch技术介绍</a>）</p>
+
+<p>参考&amp;引用</p>
+
+<ol>
+<li>《云计算网络珠玑》 李俊武</li>
+<li><a href="http://www.sdnlab.com/12966.html?utm_source=tuicool">http://www.sdnlab.com/12966.html?utm_source=tuicool</a></li>
+</ol>
+</p>
+          <p>24 Aug 2016
+            
+              
+                <a href="https://dingtongqin.github.io/tags/openstack/">#openstack</a>
+              
+                <a href="https://dingtongqin.github.io/tags/neutron/">#neutron</a>
+              
+                <a href="https://dingtongqin.github.io/tags/cloud-computing/">#cloud computing</a>
+              
+            
+          </p>
+          
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    var disqus_shortname = 'Your Disqus Name';
+    
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s3 m1">
+      
+        <a class="btn-floating btn-large disabled"><i class="mdi-navigation-arrow-back"></i></a>
+      
+      </div>
+      <div class="col s6 m10 center">&nbsp</div>
+      <div class="col s3 m1">
+      
+        <a class="btn-floating btn-large waves-effect waves-light" href="https://dingtongqin.github.io/technology/openvswitch/"><i class="mdi-navigation-arrow-forward"></i></a>
+      
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+       2016 Copyright Text
+      <div class="right">Design <a class="grey-text text-lighten-4" href="http://pdevty.github.io/blog/">pdevty</a></div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://dingtongqin.github.io/js/materialize.min.js"></script>
+  <script src="https://dingtongqin.github.io/js/init.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'Your Analytics User Id', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+
+  </body>
+</html>
+

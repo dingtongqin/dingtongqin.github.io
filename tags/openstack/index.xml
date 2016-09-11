@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openstack on Tony Ding&#39;s Blog</title>
+    <link>https://dingtongqin.github.io/tags/openstack/</link>
+    <description>Recent content in Openstack on Tony Ding&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright> 2016 Copyright Text</copyright>
+    <lastBuildDate>Wed, 24 Aug 2016 12:00:00 +0000</lastBuildDate>
+    <atom:link href="https://dingtongqin.github.io/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>OpenStack Neutron架构学习总结</title>
+      <link>https://dingtongqin.github.io/technology/neutron/</link>
+      <pubDate>Wed, 24 Aug 2016 12:00:00 +0000</pubDate>
+      
+      <guid>https://dingtongqin.github.io/technology/neutron/</guid>
+      <description>
+
+&lt;p&gt;&amp;emsp;&amp;emsp;最近在学习Neutron，本文的目的是从总体角度来梳理一下思路和备忘，本文就OpenStack Neutron的发展及基本架构作一个简单总结分析，并不涉及Neutron具体的技术细节，随着工作学习的深入，会分享总结一些具体的技术细节讨论帖。&lt;/p&gt;
+
+&lt;h3 id=&#34;openstack网络架构发展&#34;&gt;openstack网络架构发展&lt;/h3&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;OpenStack的网络最初是由Nova-network来提供的，租户间的隔离采用VLAN技术。在2010年OpenStack第一个版本Austin正是发布时，Nova-network便已作为正式组件发布，起主要功能是为虚拟机提供私有IP和浮动IP，通过IPtables和Ebtables提供安全功能，为网络管理提供三种网络模型：Flat Network、Flat DHCP Network和VLAN Network。Nova-network的网络里，物理机上同一租户的虚拟机通过Linux Bridge与服务器的物理网卡相连，以此来将数据信息发往外网或其他服务器上虚拟机，每个租户至少占用一个VLAN隔离域，租户内的虚拟机如果通过DHCP获取IP，必须有对应子网的Dnsmasq进程。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;Nova-network的优势是拓扑简单、报文转发流程少且转发效率高等优势，但也存在功能较少、只支持二层转发、不便于扩展、不支持重叠地址的多个私有网络、不能提供高级网络服务，隔离方式只支持VLAN，没有提供VXLAN和NVGRE的成熟可用方案。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;OpenStack在Diablo版中Quantum以发展项目的形式首次出现，在Essex版中有了试用版的Quantum，直到Folsom版本Quantum才正式发布。在G版本中，因为名称Quantum已经被一个公司注册，所以在H版本中更名为Neutron，现在我们发现，OpenStack的文档中很多命名都还是基于Quantum命名的，如qr-xxx,qvbxxx等，其中q即quantum的缩写。&lt;/p&gt;
+
+&lt;h3 id=&#34;neutron-网络架构&#34;&gt;Neutron 网络架构&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://dingtongqin.github.io/images/Neutron/OpenStack-Neutron-framework.jpg&#34; width = &#34;502&#34; height = &#34;316&#34; alt=&#34;&#34; align=center /&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;上图（引用2）很好的表达了neutron的架构。Neutron只有一个主要的服务进程neutron-server,它运行于控制节点，提供RESTful API作为访问Neutron的入口，neutron-server接收用户的HTTP请求，最终由遍布于计算节点和网络节点的各种Agent来完成。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;Neutron提供众多API资源对应Neutron的网络抽象，其中L2的抽象network、subnet和port被认为是核心资源，其他层次的抽象，如router以及其它高层次的服务则被定义为扩展资源（Extension API）。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;为了更容易扩展，Neutron以Plugin的方式组织代码，每一个Plugin支持一组API资源并完成特定的操作，这些操作最终由Plugin通过RPC调用相应的Agent来完成。这些Plugin又被做了一些区分，一些提供基础二层虚拟网络支持的Plugin成为Core Plugin，它们必须至少实现L2的三个主要抽象，管理员需要从实现的Core Plugin中选择一种。Core Plugin之外的其他Plugin被成为“Service Plugin”，如提供防火墙服务的Firewall Plugin。在H版本中Neutron实现了一个ML2 Core Plugin，它采用了更加灵活的结构进行实现，通过Driver的形式可以对现有的各种Core Plugin提供支持，ML2 Plugin的出现意在取代目前的所有Core Plugin。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;Agent一般专属于某个功能，用于使用物理网络设备或一些虚拟技术完成某些实际的操作，比如实现router具体操作的L3 Agent。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;Neutron中Core Plugin完成二层网络隔离的相关配置和实现互通性的虚拟机的报文转发，现在的种类很多，使用时只能选择一个。另一种Service Plugin主要实现三层网络功能以及三层以上的业务应用功能，如Meter/Router/FWaas/LBaas/VPNaas等，每种应用的底层Service Plugin也可能会有多种，基本只能选择其中一个来使用。Neutron支持的Core Plugin举例如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    -  Open vSwitch Plugin
+    -  Linux Bridge Plugin
+    -  Cisco UCS/Nexus Plugin
+    -  Cloudbase Hyper-v Plugin
+    -  Nicira Network Virtualization Platform Plugin
+    -  Brocade Neutron Plugin
+    -  Big Switch Controller Plugin
+    -  NEC OpenFlow Plugin
+    -  Ryu OpenFlow Controller Plugin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;在OpenStack应用中，使用最广泛的Core Plugin是Open Vswitch,关于openvswitch的介绍可以看另一篇博客（&lt;a href=&#34;https://dingtongqin.github.io/technology/openvswitch/&#34;&gt;openvswitch技术介绍&lt;/a&gt;）&lt;/p&gt;
+
+&lt;p&gt;参考&amp;amp;引用&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;《云计算网络珠玑》 李俊武&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sdnlab.com/12966.html?utm_source=tuicool&#34;&gt;http://www.sdnlab.com/12966.html?utm_source=tuicool&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
