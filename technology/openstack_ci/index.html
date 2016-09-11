@@ -106,16 +106,16 @@
 <p>&emsp;&emsp;持续测试软件作为持续集成的重要组成部分，为软件质量保证和改进体系的重要手段，社区用到的持续测试系统如下所示：</p>
 
 <pre><code>    - Selenium：用于自动化测试Dashboard UI
-    - Tempest:用于自动化测试OpenStack API
+    - Tempest: 用于自动化测试OpenStack API
     - Rally: 用于自动化测试OpenStack性能
-    - Unit Tests：用于每个项目的单元测试
-    - Testlink系统：用于管理各个测试用例。
+    - Unit Tests： 用于每个项目的单元测试
+    - Testlink系统： 用于管理各个测试用例。
     - 其他
 </code></pre>
 
 <p>&emsp;&emsp;开发人员在Gerrit上，提交了一个Patch、Commit，那怎么来确保这个新的Patch不会影响别的其他代码，以及这个patch本身是OK的呢。那就是用冒烟测试方法。现在，我们的一个暂时做法是，将这个新的Patch打成一个rpm包，放在一个集成了其他测试工具的由DevStack方法（均用自己产品的rpm包）部署的all-in-one平台上，做回归测试。</p>
 </p>
-          <p>20 Apr 2016
+          <p>18 Aug 2016
             
               
                 <a href="https://dingtongqin.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/">#持续集成</a>
@@ -144,13 +144,13 @@
     <div class="row">
       <div class="col s3 m1">
       
-        <a class="btn-floating btn-large waves-effect waves-light" href="https://dingtongqin.github.io/technology/openvswitch/"><i class="mdi-navigation-arrow-back"></i></a>
+        <a class="btn-floating btn-large waves-effect waves-light" href="https://dingtongqin.github.io/technology/neutron/"><i class="mdi-navigation-arrow-back"></i></a>
       
       </div>
       <div class="col s6 m10 center">&nbsp</div>
       <div class="col s3 m1">
       
-        <a class="btn-floating btn-large disabled"><i class="mdi-navigation-arrow-forward"></i></a>
+        <a class="btn-floating btn-large waves-effect waves-light" href="https://dingtongqin.github.io/technology/openvswitch/"><i class="mdi-navigation-arrow-forward"></i></a>
       
       </div>
     </div>

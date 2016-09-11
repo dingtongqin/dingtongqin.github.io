@@ -7,13 +7,13 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright> 2016 Copyright Text</copyright>
-    <lastBuildDate>Wed, 20 Apr 2016 12:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Aug 2016 12:00:00 +0000</lastBuildDate>
     <atom:link href="https://dingtongqin.github.io/categories/%E7%A4%BE%E5%8C%BA%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>OpenStack 社区持续集成简介</title>
       <link>https://dingtongqin.github.io/technology/openstack_ci/</link>
-      <pubDate>Wed, 20 Apr 2016 12:00:00 +0000</pubDate>
+      <pubDate>Thu, 18 Aug 2016 12:00:00 +0000</pubDate>
       
       <guid>https://dingtongqin.github.io/technology/openstack_ci/</guid>
       <description>
@@ -53,10 +53,10 @@
 &lt;p&gt;&amp;emsp;&amp;emsp;持续测试软件作为持续集成的重要组成部分，为软件质量保证和改进体系的重要手段，社区用到的持续测试系统如下所示：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;    - Selenium：用于自动化测试Dashboard UI
-    - Tempest:用于自动化测试OpenStack API
+    - Tempest: 用于自动化测试OpenStack API
     - Rally: 用于自动化测试OpenStack性能
-    - Unit Tests：用于每个项目的单元测试
-    - Testlink系统：用于管理各个测试用例。
+    - Unit Tests： 用于每个项目的单元测试
+    - Testlink系统： 用于管理各个测试用例。
     - 其他
 &lt;/code&gt;&lt;/pre&gt;
 
