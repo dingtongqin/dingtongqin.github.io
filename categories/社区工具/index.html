@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>Tags</title>
+  <title>社区工具</title>
   <link href="https://dingtongqin.github.io/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="https://dingtongqin.github.io/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
@@ -53,24 +52,58 @@
   </div>
 
 
-
 <div class="container">
   <div class="section">
 
-    <div class="collection">
+
+<div class="row">
+
+  
+  <div class="col m4 s12">
+    <div class="card-panel">
+      <h4><a href="https://dingtongqin.github.io/technology/openstack_ci/">OpenStack 社区持续集成简介</a></h4>
+      <p>
       
-        <a href="https://dingtongqin.github.io/tags/neutron/" class="collection-item"><i class="mdi-action-loyalty left"></i>neutron<div class="secondary-content">1</div></a>
+        
+          <a href="https://dingtongqin.github.io/categories/%E7%A4%BE%E5%8C%BA%E5%B7%A5%E5%85%B7/">社区工具</a>
+        
+          <a href="https://dingtongqin.github.io/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/">云计算</a>
+        
+       
+      </p>
+      <p>什么是持续集成 &emsp;&emsp;持续集成是一种软件开发时间，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误。许多团队发现这个过程可以大大减少集成问题，让团队能够更快的开发内聚的软件。 持续集成的前提 - 统一的代码库 - 自动构建 - 自动测试 - 每个人每天都要想代码库主干提交代码 - 每次迭代递交后都会在持续集成服务器触发一次构建 - 保证快速构建 - 模拟生产环境的自动测试 - 每个人都可以很容易的获取最新可执行的应用程序 - 每个人都清楚正在发生的状况 - 自动化部署 ###OpenStack社区CI体系 如图所示，为OpenStack社区CI框架，主要使用如下几种组件： - Gerrit：代码审查和git资源库管理 - Zull、Git：代码库控制系统。 - Jenkins：持续集成服务器，构建持续集成任务、用于定时管理任务。 - Nodepool：部署在OpenStack云上的智能的Jenins衍生工具。 - Github：用于存放Gerrit上被Merge的代码。 - 其他 &emsp;&emsp;持续测试软件作为持续集成的重要组成部分，为软件质量保证和改进体系的重要手段，社区用到的持续测试系统如下所示： - Selenium：用于自动化测试Dashboard UI - Tempest:用于自动化测试OpenStack API - Rally: 用于自动化测试OpenStack性能 - Unit Tests：用于每个项目的单元测试 - Testlink系统：用于管理各个测试用例。 - 其他 &emsp;&emsp;开发人员在Gerrit上，提交了一个Patch、Commit，那怎么来确保这个新的Patch不会影响别的其他代码，以及这个patch本身是OK的呢。那就是用冒烟测试方法。现在，我们的一个暂时做法是，将这个新的Patch打成一个rpm包，放在一个集成了其他测试工具的由DevStack方法（均用自己产品的rpm包）部署的all-in-one平台上，做回归测试。</p>
+      <p>
+      20 Apr 2016
       
-        <a href="https://dingtongqin.github.io/tags/open-vswitch/" class="collection-item"><i class="mdi-action-loyalty left"></i>open-vswitch<div class="secondary-content">1</div></a>
-      
-        <a href="https://dingtongqin.github.io/tags/openstack/" class="collection-item"><i class="mdi-action-loyalty left"></i>openstack<div class="secondary-content">1</div></a>
-      
-        <a href="https://dingtongqin.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" class="collection-item"><i class="mdi-action-loyalty left"></i>持续集成<div class="secondary-content">1</div></a>
-      
+        
+          <a href="https://dingtongqin.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/">#持续集成</a>
+        
+       
+      </p>
     </div>
+  </div>
+
+</div>
+
+
+<div class="row">
+  <div class="col s3 m1">
+  
+    <a class="btn-floating btn-large disabled"><i class="mdi-navigation-arrow-back"></i></a>
+  
+  </div>
+  <div class="col s6 m10 center">&nbsp</div>
+  <div class="col s3 m1">
+  
+    <a class="btn-floating btn-large disabled"><i class="mdi-navigation-arrow-forward"></i></a>
+  
+  </div>
+</div>
+
 
   </div>
 </div>
+
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">

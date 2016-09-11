@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>OpenStack 社区持续集成简介</title>
+  <link href="https://dingtongqin.github.io/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="https://dingtongqin.github.io/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
+  <style type="text/css">
+  
+    footer.page-footer{background-image: url(https://dingtongqin.github.io/images/default.png);}
+  
+  </style>
+</head>
+<body>
+  <ul id="slide-out" class="side-nav">
+    <li><a href="https://dingtongqin.github.io"><i class="mdi-action-home left"></i>Home<i class="mdi-hardware-keyboard-arrow-right right"></i></a></li>
+    <li><a href="https://dingtongqin.github.io/categories/"><i class="mdi-action-perm-media left"></i>Categories<i class="mdi-hardware-keyboard-arrow-right right"></i></a></li>
+    <li><a href="https://dingtongqin.github.io/tags/"><i class="mdi-action-loyalty left"></i>Tags<i class="mdi-hardware-keyboard-arrow-right right"></i></a></li>
+  </ul>
+  <div id="index-banner" class="parallax-container">
+  <a data-activates="slide-out" class="btn-floating button-collapse" style="top: 5px; left: 5px;"><i class="mdi-navigation-menu"></i></a>
+    <div class="section no-pad-bot">
+      <div class="container">
+        
+        <h1 class="header center teal-text text-lighten-2">Tony Ding&#39;s Blog</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">Keep Learning</h5>
+        </div>
+        <div class="row center">
+        
+          <a href="https://github.com/dingtongqin"><img src="https://dingtongqin.github.io/images/github2-dreamstale35.png"></a>
+        
+        
+        
+        
+          <a href="https://google.com/+Your%20Google&#43;%20profile%20name"><img src="https://dingtongqin.github.io/images/gplus48x48.png"></a>
+        
+        
+          <a href="https://www.linkedin.com/in/Your%20LinkedIn%20Name"><img src="https://dingtongqin.github.io/images/linkedin-dreamstale45.png"></a>
+        
+          <a href="https://dingtongqin.github.io/index.xml"><img src="https://dingtongqin.github.io/images/feed-dreamstale27.png"></a>
+        </div>
+      </div>
+    </div>
+    <div class="parallax">
+    
+      <img src="https://dingtongqin.github.io/images/default.png">
+    
+    </div>
+  </div>
+
+
+
+<div class="container">
+  <div class="section">
+
+    <div class="row">
+      <div class="col s12">
+        <div class="card-panel">
+          <h4>OpenStack 社区持续集成简介</h4>
+          <p>
+          
+            
+              <a href="https://dingtongqin.github.io/categories/%E7%A4%BE%E5%8C%BA%E5%B7%A5%E5%85%B7/">社区工具</a>
+            
+              <a href="https://dingtongqin.github.io/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/">云计算</a>
+            
+           
+          </p>
+          <p>
+
+<h3 id="什么是持续集成">什么是持续集成</h3>
+
+<p>&emsp;&emsp;持续集成是一种软件开发时间，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误。许多团队发现这个过程可以大大减少集成问题，让团队能够更快的开发内聚的软件。</p>
+
+<h3 id="持续集成的前提">持续集成的前提</h3>
+
+<pre><code>    - 统一的代码库
+    - 自动构建
+    - 自动测试
+    - 每个人每天都要想代码库主干提交代码
+    - 每次迭代递交后都会在持续集成服务器触发一次构建
+    - 保证快速构建
+    - 模拟生产环境的自动测试
+    - 每个人都可以很容易的获取最新可执行的应用程序
+    - 每个人都清楚正在发生的状况
+    - 自动化部署
+</code></pre>
+
+<p>###OpenStack社区CI体系</p>
+
+<p><img src="/images/openstack_ci/openstack_ci.jpg" width = "575" height = "403" alt="" align=center /></p>
+
+<p>如图所示，为OpenStack社区CI框架，主要使用如下几种组件：</p>
+
+<pre><code>    - Gerrit：代码审查和git资源库管理
+    - Zull、Git：代码库控制系统。
+    - Jenkins：持续集成服务器，构建持续集成任务、用于定时管理任务。
+    - Nodepool：部署在OpenStack云上的智能的Jenins衍生工具。
+    - Github：用于存放Gerrit上被Merge的代码。
+    - 其他
+</code></pre>
+
+<p>&emsp;&emsp;持续测试软件作为持续集成的重要组成部分，为软件质量保证和改进体系的重要手段，社区用到的持续测试系统如下所示：</p>
+
+<pre><code>    - Selenium：用于自动化测试Dashboard UI
+    - Tempest:用于自动化测试OpenStack API
+    - Rally: 用于自动化测试OpenStack性能
+    - Unit Tests：用于每个项目的单元测试
+    - Testlink系统：用于管理各个测试用例。
+    - 其他
+</code></pre>
+
+<p>&emsp;&emsp;开发人员在Gerrit上，提交了一个Patch、Commit，那怎么来确保这个新的Patch不会影响别的其他代码，以及这个patch本身是OK的呢。那就是用冒烟测试方法。现在，我们的一个暂时做法是，将这个新的Patch打成一个rpm包，放在一个集成了其他测试工具的由DevStack方法（均用自己产品的rpm包）部署的all-in-one平台上，做回归测试。</p>
+</p>
+          <p>20 Apr 2016
+            
+              
+                <a href="https://dingtongqin.github.io/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/">#持续集成</a>
+              
+            
+          </p>
+          
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    var disqus_shortname = 'Your Disqus Name';
+    
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s3 m1">
+      
+        <a class="btn-floating btn-large waves-effect waves-light" href="https://dingtongqin.github.io/technology/openvswitch/"><i class="mdi-navigation-arrow-back"></i></a>
+      
+      </div>
+      <div class="col s6 m10 center">&nbsp</div>
+      <div class="col s3 m1">
+      
+        <a class="btn-floating btn-large disabled"><i class="mdi-navigation-arrow-forward"></i></a>
+      
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+       2016 Copyright Text
+      <div class="right">Design <a class="grey-text text-lighten-4" href="http://pdevty.github.io/blog/">pdevty</a></div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://dingtongqin.github.io/js/materialize.min.js"></script>
+  <script src="https://dingtongqin.github.io/js/init.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'Your Analytics User Id', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+
+  </body>
+</html>
+
