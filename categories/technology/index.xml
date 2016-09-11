@@ -18,7 +18,7 @@
       <guid>https://dingtongqin.github.io/technology/neutron/</guid>
       <description>
 
-&lt;p&gt;&amp;emsp;&amp;emsp;最近在学习Neutron，本文的目的是整体体角度来梳理一下思路和并作为备忘，本文就OpenStack Neutron的发展及基本架构作一个简单总结分析，并不涉及Neutron具体的技术细节，随着工作学习的深入，会分享总结一些具体的技术细节讨论帖。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;最近在学习Neutron，本文的目的是从整体角度来梳理一下思路和并作备忘，本文就OpenStack Neutron的发展及基本架构作一个简单总结分析，并不涉及Neutron具体的技术细节，随着工作学习的深入，会分享总结一些具体的技术细节讨论帖。&lt;/p&gt;
 
 &lt;h3 id=&#34;openstack网络架构发展&#34;&gt;openstack网络架构发展&lt;/h3&gt;
 
